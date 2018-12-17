@@ -40,17 +40,7 @@
                 </video>
             </div>
             <div class="col-4 align-self-center">
-                <table class="table table-bordered">
-                    <tr>
-                        <th class="thead-dark">Title</th>
-                        <td>The Last Stand</td>
-                    </tr>
-                    <tr>
-                        <th>Genre</th>
-                        <td>Action, Thriller</td>
-
-                    </tr>
-                </table>
+                <button id="switch-button">Switch</button>
             </div>
         </div>
 
@@ -191,13 +181,12 @@
                 })
             });
         };
-        // $(document).ready(function() {
-        //     console.log('Hi');
-        //     $("#my-video").on('timeupdate', function () {
-        //         console.log(this.currentTime());
-        //         console.log("HELLO!");
-        //     })
-        // });
+        $(document).ready(function() {
+            console.log('Hi');
+            $("#switch-button").click(function () {
+                console.log("HELLO!");
+            })
+        });
 
     </script>
 

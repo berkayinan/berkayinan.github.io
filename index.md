@@ -1,4 +1,4 @@
-# Welcome!!!
+# Demos
 
 [Detecting & analyzing genre of movie clips (demo)](movie_genre.html)
 

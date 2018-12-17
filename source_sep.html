@@ -177,6 +177,8 @@
 
             player.ready(function () {
                 console.log('qwe');
+                this.videoTracks().addTrack(track);
+
                 this.on('timeupdate', function () {
                     console.log(this.currentTime());
                     //chart.unload();
@@ -189,7 +191,6 @@
 
                 })
             });
-            player.videoTracks().addTrack(track);
         };
         $(document).ready(function() {
             console.log('Hi');

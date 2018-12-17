@@ -31,8 +31,8 @@
         <div class="row my-5">
             <div class="col-8 align-self-center">
                 <video id="my-video" class="video-js" controls preload="auto" style="width:100%;min-width: 400px; height: 300px;" data-setup="{}">
-                    <!-- <source src="/static/john_vs_colbert.mp4" type='video/mp4'> -->
-                    <source src="/static/john_vs_colbert_rectangle_264.mp4" type='video/mp4'>
+                    <source src="/static/john_vs_colbert.mp4" type='video/mp4'>
+                    <!-- <source src="/static/john_vs_colbert_rectangle_264.mp4" type='video/mp4'> -->
 
                     <!-- <source src="MY_VIDEO.webm" type='video/webm'> -->
                     <p class="vjs-no-js">
@@ -194,8 +194,10 @@
             $("#switch-button").click(function () {
                 console.log("HELLO!");
                 player.pause();
-                player.src("/static/john_vs_colbert_output_rectangle.mp4");
+                var video_time = player.currentTime();
+                player.src("/static/john_vs_colbert_rectangle_264.mp4");
                 player.load();
+                player.currentTime(video_time);
                 player.play();
             })
         });

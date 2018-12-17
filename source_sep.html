@@ -178,6 +178,21 @@
             player.ready(function () {
                 console.log('qwe');
                 this.videoTracks().addTrack(track);
+                var videoTrackList = player.videoTracks();
+
+                // Listen to the "change" event.
+                videoTrackList.addEventListener('change', function() {
+
+                // Log the currently enabled VideoTrack label.
+                for (var i = 0; i < videoTrackList.length; i++) {
+                    var track = videoTrackList[i];
+
+                    if (track.enabled) {
+                    videojs.log(track.label);
+                    return;
+                    }
+                }
+                });
 
                 this.on('timeupdate', function () {
                     console.log(this.currentTime());

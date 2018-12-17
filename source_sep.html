@@ -31,7 +31,8 @@
         <div class="row my-5">
             <div class="col-8 align-self-center">
                 <video id="my-video" class="video-js" controls preload="auto" style="width:100%;min-width: 400px; height: 300px;" data-setup="{}">
-                    <source src="/static/007303.mp4" type='video/mp4'>
+                    <source src="/static/john_vs_colbert.mp4" type='video/mp4'>
+                        
                     <!-- <source src="MY_VIDEO.webm" type='video/webm'> -->
                     <p class="vjs-no-js">
                         To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -40,7 +41,7 @@
                 </video>
             </div>
             <div class="col-4 align-self-center">
-                <button id="switch-button">Switch</button>
+                <button id="switch-button" class="btn btn-primary">Switch</button>
             </div>
         </div>
 
@@ -166,7 +167,15 @@
 
             var cur = 0;
             var prev = 0;
-            videojs('my-video').ready(function () {
+            var player =  new videojs('my-video');
+            var track = new videojs.VideoTrack({
+                id: 'rectangle-output',
+                kind: 'commentary',
+                label: 'Output of NN',
+                language: 'en'
+            });
+
+            player.ready(function () {
                 console.log('qwe');
                 this.on('timeupdate', function () {
                     console.log(this.currentTime());
@@ -180,11 +189,13 @@
 
                 })
             });
+            player.videoTracks().addTrack(track);
         };
         $(document).ready(function() {
             console.log('Hi');
             $("#switch-button").click(function () {
                 console.log("HELLO!");
+                console.log(new videojs('my-video').videoTracks())
             })
         });
 

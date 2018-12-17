@@ -41,9 +41,7 @@
                 </video>
 
 
-            <video id="output-video" class="video-js" controls>
-                <source id="rectangle-output" src="/static/john_vs_colbert_output_rectangle.mp4" type="video/mp4">
-            </video>
+
             </div>
             <div class="col-4 align-self-center">
                 <button id="switch-button" class="btn btn-primary">Switch</button>
@@ -173,31 +171,10 @@
             var cur = 0;
             var prev = 0;
             var player =  new videojs('my-video');
-            var track = new videojs.VideoTrack({
-                id: 'rectangle-output',
-                kind: 'commentary',
-                label: 'Output of NN',
-                language: 'en'
-            });
-
+            
             player.ready(function () {
-                console.log('qwe');
-                this.videoTracks().addTrack(track);
-                var videoTrackList = player.videoTracks();
+                
 
-                // Listen to the "change" event.
-                videoTrackList.addEventListener('change', function() {
-
-                // Log the currently enabled VideoTrack label.
-                for (var i = 0; i < videoTrackList.length; i++) {
-                    var track = videoTrackList[i];
-
-                    if (track.enabled) {
-                    videojs.log(track.label);
-                    return;
-                    }
-                }
-                });
 
                 this.on('timeupdate', function () {
                     console.log(this.currentTime());
@@ -214,9 +191,13 @@
         };
         $(document).ready(function() {
             console.log('Hi');
+            player = new videojs('my-video');
             $("#switch-button").click(function () {
                 console.log("HELLO!");
-                console.log(new videojs('my-video').videoTracks())
+                player.pause();
+                player.src("/static/john_vs_colbert_output_rectangle.mp4");
+                player.load();
+                player.play();
             })
         });
 

@@ -26,6 +26,19 @@
             stroke: red;
             stroke-width: 5px;
         }
+        /* Bootstrap Toggle v2.2.2 corrections for Bootsrtap 4*/
+        .toggle-off {
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+        }
+        .toggle.off {
+            border-color: rgba(0, 0, 0, .25);
+        }
+
+        .toggle-handle {
+            background-color: white;
+            border: thin rgba(0, 0, 0, .25) solid;
+        }
+
     </style>
 </head>
 
@@ -34,7 +47,8 @@
     <div class="container">
         <div class="row my-5">
             <div class="col-8 align-self-center">
-                <video id="my-video" class="video-js" controls preload="auto" style="width:100%;min-width: 400px; height: 300px;" data-setup="{}">
+                <video id="my-video" class="video-js" controls preload="auto" style="width:100%;min-width: 400px; height: 300px;"
+                    data-setup="{}">
                     <source src="/static/john_vs_colbert.mp4" type='video/mp4'>
                     <!-- <source src="/static/john_vs_colbert_rectangle_264.mp4" type='video/mp4'> -->
 
@@ -47,11 +61,11 @@
 
             </div>
             <div class="col-4 align-self-center">
-                <input type="switch-button" data-toggle="toggle" data-off="Mixed" data-on="Output">
+                <input id="switch-button" type="checkbox" data-on="Mixed" data-off="Output">
                 <script>
-                        $(function() {
-                          $('#switch-button').bootstrapToggle();
-                        })
+                    $(function () {
+                        $('#switch-button').bootstrapToggle();
+                    })
                 </script>
             </div>
         </div>
@@ -61,7 +75,7 @@
                 <div id="tester" style="width:100%;min-width: 400px;height: 200px;"></div>
             </div>
             <div class="col-4 align-self-center">
-                <div id="barchartdiv" style="width:100%;min-width: 300px;height: 200px;"></div>
+                <!-- <div id="barchartdiv" style="width:100%;min-width: 300px;height: 200px;"></div> -->
             </div>
         </div>
     </div>
@@ -86,7 +100,7 @@
                 bindto: '#barchartdiv',
                 data: {
                     columns: [
-                        ['scores',0.82384843, 0.44562801, 0.11424581, 0.01837175, 0.33477732]
+                        ['scores', 0.82384843, 0.44562801, 0.11424581, 0.01837175, 0.33477732]
                     ],
                     color: function (inColor, data) {
                         if (data.index !== undefined) {
@@ -159,17 +173,17 @@
                 },
                 axis: {
                     y: {
-                        max: 1,
-                        min: 0,
+                        max: 0.5,
+                        min: -0.5,
                         // Range includes padding, set 0 if no padding needed
                         padding: { top: 0, bottom: 0 }
                     }
                 },
                 transition: {
-                    duration: 350
+                    duration: 0
                 }
             });
-            $.getJSON('/static/7303_mid.json', function (json) {
+            $.getJSON('/static/waveform_colbert_vs_stephen.json', function (json) {
                 console.log('GETJSON')
                 var json_file = json;
                 chart.load({ json: json_file });
@@ -178,16 +192,16 @@
 
             var cur = 0;
             var prev = 0;
-            var player =  new videojs('my-video');
-            
+            var player = new videojs('my-video');
+
             player.ready(function () {
-                
+
 
 
                 this.on('timeupdate', function () {
                     console.log(this.currentTime());
                     //chart.unload();
-                    cur = this.currentTime();
+                    cur = this.currentTime()*(16000/200);
                     chart.xgrids.add(
                         { value: cur, class: 'scanline' }
                     );
@@ -197,14 +211,21 @@
                 })
             });
         };
-        $(document).ready(function() {
+        $(document).ready(function () {
             console.log('Hi');
             player = new videojs('my-video');
+            
             $("#switch-button").change(function () {
                 console.log("HELLO!");
                 player.pause();
                 var video_time = player.currentTime();
-                player.src("/static/john_vs_colbert_rectangle_264.mp4");
+                if($(this).prop('checked')){
+                    var video_to_put = "/static/john_vs_stephen_h264_full.mp4";
+                }
+                else{
+                    var video_to_put = "/static/john_vs_colbert.mp4";
+                }
+                player.src(video_to_put);
                 player.load();
                 player.currentTime(video_time);
                 player.play();

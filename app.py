@@ -10,7 +10,7 @@ def hello_world():
 
 @app.route('/')
 def source_sep():
-    return render_template('/source_sep.html')
+    return render_template('/source_sep_tr.html')
 
 if __name__ == '__main__':
     app.run('0.0.0.0')
